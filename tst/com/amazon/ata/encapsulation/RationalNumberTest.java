@@ -57,7 +57,7 @@ public class RationalNumberTest {
 
         //THEN
         assertTrue(Double.compare(oneDecimal, decimalOutput) == 0,
-                   "Expected 1/1 to have decimal value of 1.0");
+                "Expected 1/1 to have decimal value of 1.0");
     }
 
     @Test
@@ -92,7 +92,7 @@ public class RationalNumberTest {
     public void constructor_withZeroDenominator_throwsException() {
         //WHEN & THEN
         Assertions.assertThrows(IllegalArgumentException.class, () -> new RationalNumber(1, 0),
-                                "The constructor should not allow an illegal denominator value of 0.");
+                "The constructor should not allow an illegal denominator value of 0.");
     }
 
     @Test
@@ -101,8 +101,8 @@ public class RationalNumberTest {
         RationalNumber half = new RationalNumber(1, 2);
 
         //WHEN & THEN
-        Assertions.assertThrows(IllegalArgumentException.class, () -> half.denominator = 0, "You should not "
-            + "be able to edit an existing RationalNumber and make it invalid with a 0 value denominator.");
+        Assertions.assertThrows(IllegalArgumentException.class, () -> half.update(1, 0), "You should not "
+                + "be able to edit an existing RationalNumber and make it invalid with a 0 value denominator.");
     }
 
     @Test
@@ -123,8 +123,7 @@ public class RationalNumberTest {
         //GIVEN
         RationalNumber half = new RationalNumber(1, 2);
         RationalNumber half2 = new RationalNumber(1, 2);
-        half2.numerator = 2;
-        half2.denominator = 4;
+        half2.update(2, 4);
 
         //WHEN
         boolean equal = half.equals(half2);
@@ -132,4 +131,17 @@ public class RationalNumberTest {
         //THEN
         assertTrue(equal, "1/2 and 2/4 should be equal.");
     }
+
+    @Test
+    public void constructor_existingRationalNumber_createsCopy() {
+        //GIVEN
+        RationalNumber half = new RationalNumber(1, 2);
+        //WHEN
+        RationalNumber newRationalNum = new RationalNumber(half);
+        //THEN
+        assertEquals(half.getNumerator(), newRationalNum.getNumerator(), "Copy constructor didn't work!!");
+        assertEquals(half.getDenominator(), newRationalNum.getDenominator(), "Copy constructor didn't work!!");
+
+    }
+
 }
